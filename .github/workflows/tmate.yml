@@ -24,15 +24,15 @@ jobs:
       - name: Extract
         run: tar xzf gcc-10.2.0.tar.gz gcc
 
-      - name: COnfigure and build
+      - name: Configure and build
         run: |
           mkdir build
           cd build
           ../gcc/configure --disable-bootstrap --enable-languages=c,c++
           make -j
 
-     - uses: actions/upload-artifact@v2
-       with:
-         name: built-gcc
-         path: build
+      - uses: actions/upload-artifact@v2
+        with:
+          name: built-gcc
+          path: build
 
