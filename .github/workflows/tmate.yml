@@ -3,13 +3,7 @@
 name: CI
 
 # Controls when the action will run. 
-on:
-  # Triggers the workflow on push or pull request events but only for the main branch
-  push:
-    branches: [ main ]
-    
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+on: push
 
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -24,6 +18,21 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
+      - name: Download
+        run: wget http://ftpmirror.gnu.org/gnu/gcc/gcc-10.2.0/gcc-10.2.0.tar.gz 
 
-      - name: Debugging with tmate
-        uses: mxschmitt/action-tmate@v3.3
+      - name: Extract
+        run: tar xzf gcc-10.2.0.tar.gz gcc
+
+      - name: COnfigure and build
+        run: |
+          mkdir build
+          cd build
+          ../gcc/configure --disable-bootstrap --enable-languages=c,c++
+          make -j
+
+     - uses: actions/upload-artifact@v2
+       with:
+         name: built-gcc
+         path: build
+
