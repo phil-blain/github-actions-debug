@@ -24,6 +24,9 @@ jobs:
       - name: Extract
         run: tar xzf gcc-10.2.0.tar.gz
 
+      - name: Install dependencies
+        run: sudo apt install libmpfr-dev libmpfr6 libgmp-dev libgmp10 libmpc3 libmpc-dev libisl-dev libisl22
+
       - name: Configure and build
         run: |
           mkdir build
