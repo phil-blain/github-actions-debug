@@ -25,6 +25,5 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-
-      - name: Debugging with tmate
-        uses: mxschmitt/action-tmate@v3.3
+      - name: Debugging with upterm
+        uses: lhotari/action-upterm@v1
