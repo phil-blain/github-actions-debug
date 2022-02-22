@@ -1,0 +1,6 @@
+RUNTESTFLAGS=
+
+$(info    RUNTESTFLAGS is $(RUNTESTFLAGS))
+
+all:
+	@:

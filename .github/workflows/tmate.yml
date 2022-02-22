@@ -3,14 +3,8 @@
 name: CI
 
 # Controls when the action will run. 
-on:
-  # Triggers the workflow on push or pull request events but only for the main branch
-  push:
-    branches: [ main ]
-    
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
+# Allows you to run this workflow manually from the Actions tab
+on: [push, workflow_dispatch]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -20,11 +14,16 @@ jobs:
     runs-on: macos-10.15
     env:
       HOMEBREW_NO_INSTALL_CLEANUP: 1
+      CC: gcc-11
+      CXX: g++-11
+      DYLD_LIBRARY_PATH: /usr/local/lib
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-
-
-      - name: Debugging with tmate
-        uses: mxschmitt/action-tmate@v3.3
+      - name: DQ, SQ, EDQ
+        run: make RUNTESTFLAGS="INTERNAL_GDBFLAGS='-nw -data-directory $PWD/gdb/data-directory -iex \"set height 0\" -iex \"set width 0\"' CC_FOR_TARGET=$CC CXX_FOR_TARGET=$CXX"
+        continue-on-error: true
+      - name: DQ, EDQ, SQ
+        run: make RUNTESTFLAGS="INTERNAL_GDBFLAGS=\"-nw -data-directory $PWD/gdb/data-directory -iex 'set height 0' -iex 'set width 0'\" CC_FOR_TARGET=$CC CXX_FOR_TARGET=$CXX"
+        continue-on-error: true 
