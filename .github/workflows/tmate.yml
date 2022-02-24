@@ -26,4 +26,4 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Debugging with upterm
-        uses: lhotari/action-upterm@v1
+        uses: phil-blain/action-upterm@v1.1
